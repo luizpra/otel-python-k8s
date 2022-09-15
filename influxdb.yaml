@@ -14,15 +14,15 @@ spec:
     targetPort: 8086
 ---    
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: influxdb
 spec:
-  strategy:
-    type: Recreate
+  replicas: 1
   selector:
     matchLabels:
       app: influxdb
+  serviceName: influxdb    
   template:
     metadata:
       labels:
@@ -45,11 +45,14 @@ spec:
               cpu: "100m"
             limits:
               memory: "512Mi"
-              cpu: "500m"
-      volumes:
-        # - name: config
-        #   configMap:
-        #     name: influxdb
-        - name: storage
-          emptyDir: {}
+              cpu: "500m"            
+  volumeClaimTemplates:
+  - metadata:
+      name: storage
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 10Gi          
             

@@ -16,7 +16,7 @@ spec:
       logging:
         loglevel: debug      
       otlp:
-        endpoint: "http://oteld-collector.opentelemetry-operator-system.svc.cluster.local:4317"
+        endpoint: "http://oteld-collector.default.svc.cluster.local:4317"
         tls:
           insecure: true
     service:

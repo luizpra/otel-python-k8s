@@ -7,6 +7,9 @@ Apply it to the cluster
 kubectl apply -k .
 ```
 
+kubectl port-forward services/rolldice 5000:5000 -n default
+
+
 Use port-forward to acess tracing
 ```
 kubectl port-forward --address 0.0.0.0 services/tracing 16686:16686 16685:16685 -n default
