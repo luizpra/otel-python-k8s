@@ -17,9 +17,13 @@ spec:
         loglevel: debug
       zipkin:
         endpoint: "http://zipkin.default.svc.cluster.local:9411/api/v2/spans"        
+      otlp:
+        endpoint: "http://telegraf-grpc.default.svc.cluster.local:4317"
+        tls:
+          insecure: true
     service:
       pipelines:
         traces:
           receivers: [otlp]
           processors: []
-          exporters: [logging, zipkin]
+          exporters: [logging, zipkin, otlp]

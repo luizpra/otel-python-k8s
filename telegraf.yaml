@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: telegraf
+  name: telegraf-grpc
+spec:
+  ports:
+    - port: 4317
+      targetPort: 4317
+  selector:
+    app: telegraf
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: telegraf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: telegraf
+  template:
+    metadata:
+      labels:
+        app: telegraf
+    spec:
+      containers:
+        - name: telegraf
+          image: telegraf:1.24.0
+          ports:
+            - name: grpc
+              containerPort: 4317
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: telegraf-envs          
+          volumeMounts:
+            - name: telegraf-conf
+              mountPath: /etc/telegraf
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"                 
+      volumes:
+        - name: telegraf-conf
+          configMap:
+            name: telegraf-conf
+        - name: telegraf-envs
+          configMap:
+            name: telegraf-envs    

@@ -32,6 +32,9 @@ spec:
         - name: influxdb
           image: "influxdb:2.4.0"
           imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: influxdb-envs           
           volumeMounts:
             - name: storage
               mountPath: /var/lib/influxdb2          

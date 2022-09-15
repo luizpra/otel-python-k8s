@@ -8,7 +8,19 @@ resources:
 - colletor.daemonset.yaml
 - instrumentation.python.yaml
 - rolldice.pyhton.yaml
-# - zipkin.yaml
+
 - jaeger.yaml
 - influxdb.yaml
+- telegraf.yaml
 
+
+configMapGenerator:
+  - name: telegraf-conf
+    files:
+      - telegraf.conf
+  - name: telegraf-envs
+    envs:
+      - influxdb.env
+  - name: influxdb-envs
+    envs:
+      - influxdb.env      
