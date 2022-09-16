@@ -8,7 +8,7 @@ resources:
 - colletor.daemonset.yaml
 - instrumentation.python.yaml
 - rolldice.pyhton.yaml
-
+# - rolldice-manual.pyhton.yaml
 - jaeger.yaml
 - influxdb.yaml
 - telegraf.yaml

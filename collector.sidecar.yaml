@@ -14,7 +14,7 @@ spec:
     processors:
     exporters:
       logging:
-        loglevel: debug      
+        loglevel: debug
       otlp:
         endpoint: "http://oteld-collector.default.svc.cluster.local:4317"
         tls:
@@ -25,4 +25,13 @@ spec:
           receivers: [otlp]
           processors: []
           exporters: [otlp,logging]
+        metrics:
+          receivers: [otlp]
+          processors: []
+          exporters: [otlp,logging]        
+        logs:
+          receivers: [otlp]
+          processors: []
+          exporters: [otlp,logging]
+
           

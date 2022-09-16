@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rolldice-manual
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rolldice-manual
+  template:
+    metadata:
+      labels:
+        app: rolldice-manual
+      annotations:
+        sidecar.opentelemetry.io/inject: "true"
+        instrumentation.opentelemetry.io/inject-python: "non-otel-python-instrumentation"
+    spec:
+      containers:
+      - name: rolldice
+        image: ghcr.io/luizpra/app-manual-instrumented-rolldice:0.0.1
+        imagePullPolicy: Always        
+        ports:
+          - containerPort: 5000
+            protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: rolldice-manual
+  name: rolldice-manual
+spec:
+  ports:
+    - port: 5000
+      targetPort: 5000
+  selector:
+    app: rolldice-manual            
