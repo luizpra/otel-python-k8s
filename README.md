@@ -13,6 +13,8 @@ kubectl port-forward services/rolldice 5000:5000 -n default
 Use port-forward to acess tracing
 ```
 kubectl port-forward --address 0.0.0.0 services/tracing 16686:16686 16685:16685 -n default
+
+kubectl port-forward --address 0.0.0.0 services/influxdb 8086:8086 -n default
 ```
 
 # Rereferences
